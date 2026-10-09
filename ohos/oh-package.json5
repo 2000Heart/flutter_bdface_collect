@@ -1,0 +1,13 @@
+{
+  "name": "flutter_bdface_collect",
+  "version": "1.0.0",
+  "description": "Baidu face offline collect plugin for OpenHarmony",
+  "main": "index.ets",
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "facesolutionsdk": "file:./libs/facesolutionsdk-1.0.0.har",
+    "faceplatformsdk": "file:./libs/faceplatformsdk.har",
+    "faceplatform": "file:./libs/faceplatform-6.4.6.har"
+  }
+}

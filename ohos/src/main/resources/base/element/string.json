@@ -1,0 +1,8 @@
+{
+  "string": [
+    {
+      "name": "camera_permission_reason",
+      "value": "用于人脸采集与活体检测"
+    }
+  ]
+}

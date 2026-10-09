@@ -4,9 +4,21 @@
 <dict>
 	<key>files</key>
 	<dict>
+		<key>Headers/BDFaceActionInfo.h</key>
+		<data>
+		aRfcir+FgT2vVFza6WzVUf0Mw6k=
+		</data>
+		<key>Headers/BDFaceDef.h</key>
+		<data>
+		ubIei9MQEI71WQ5ogdeRGNf7YFI=
+		</data>
 		<key>Headers/BDFaceQualityUtil.h</key>
 		<data>
 		fcj/C6f2qlP6eZ5+RCJmWMtAPQ0=
+		</data>
+		<key>Headers/BDFaceSaveFile.h</key>
+		<data>
+		hiXEM8d1zBNEe8wyikrUshUu5gw=
 		</data>
 		<key>Headers/BDFaceUtil.h</key>
 		<data>
@@ -14,31 +26,65 @@
 		</data>
 		<key>Headers/FaceSDKManager.h</key>
 		<data>
-		HtK3UhOfFgE7zgaseOG5WK5QEg4=
+		Hodjzr5OxuYB2w4OV8ee/XRLw3o=
+		</data>
+		<key>Headers/IDLFaceCallbackManager.h</key>
+		<data>
+		OipQnHuy746YMQyALpHjJ9+BXpc=
+		</data>
+		<key>Headers/IDLFaceColorfulManager.h</key>
+		<data>
+		1PBpf1Iszqkhj/koqWOdtVAzyeM=
 		</data>
 		<key>Headers/IDLFaceDetectionManager.h</key>
 		<data>
-		3FgLOS0NvbMFpGRtqvEJlav7MuI=
+		WnriszBcLhftWqcjgmjAQx+44cg=
+		</data>
+		<key>Headers/IDLFaceDistanceLivenessManager.h</key>
+		<data>
+		f+LOmF5OTodVawztM5BiLJnoPZ8=
 		</data>
 		<key>Headers/IDLFaceLivenessManager.h</key>
 		<data>
-		VbXN+PK0Q7IfahU2MI0U5SaPHIQ=
+		i/gPrWk5ygLXKDv7aAj7LT6Ovns=
 		</data>
 		<key>Headers/IDLFaceSDK.h</key>
 		<data>
-		4jVunSoXEW6EIui6HmQGQ/B7GgU=
+		XUe6dCViRpER1DOhDkVfKZz7bx4=
 		</data>
 		<key>Info.plist</key>
 		<data>
-		gB1gmw3UfXQHkHkeV5Y7sb7bpDA=
+		9Mg8tU0v6IzU5f5fpvnPlz5QRx0=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
-		uTVmiSBEgQ4Qw0TMMpcn7pr7ssU=
+		OrV1WXXptrXRDhtqhJbKZ6wTcKE=
 		</data>
 	</dict>
 	<key>files2</key>
 	<dict>
+		<key>Headers/BDFaceActionInfo.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			aRfcir+FgT2vVFza6WzVUf0Mw6k=
+			</data>
+			<key>hash2</key>
+			<data>
+			bXuDRKPQtV4TChHpfCL7G4/+XUl+BjgPnWBm8H3LEmY=
+			</data>
+		</dict>
+		<key>Headers/BDFaceDef.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			ubIei9MQEI71WQ5ogdeRGNf7YFI=
+			</data>
+			<key>hash2</key>
+			<data>
+			YDaH1Vu3g14vRLswxtzJY/DYEMfZaM3e0/XD5yuIdlw=
+			</data>
+		</dict>
 		<key>Headers/BDFaceQualityUtil.h</key>
 		<dict>
 			<key>hash</key>
@@ -48,6 +94,17 @@
 			<key>hash2</key>
 			<data>
 			4FebuT7rY9k2JVw4SLUakj7+ixAkjWnoHD+MaQDJSYo=
+			</data>
+		</dict>
+		<key>Headers/BDFaceSaveFile.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			hiXEM8d1zBNEe8wyikrUshUu5gw=
+			</data>
+			<key>hash2</key>
+			<data>
+			AzaRwYeUK52fUAhZJktOSXYGg7pkrhBRHjrrSp42cqU=
 			</data>
 		</dict>
 		<key>Headers/BDFaceUtil.h</key>
@@ -65,55 +122,88 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			HtK3UhOfFgE7zgaseOG5WK5QEg4=
+			Hodjzr5OxuYB2w4OV8ee/XRLw3o=
 			</data>
 			<key>hash2</key>
 			<data>
-			9xcXJTgHFJL+bQRkxB+pP+i/R4m53mKGg3BtzOl0bvw=
+			PPfkGwegABmuf7dc8yf8RNo/OnDtFvLHiHRqt1bZJLw=
+			</data>
+		</dict>
+		<key>Headers/IDLFaceCallbackManager.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			OipQnHuy746YMQyALpHjJ9+BXpc=
+			</data>
+			<key>hash2</key>
+			<data>
+			egtBVBE8zLdGO3JuC1Fz6W+a3/YgtOmxynRBwUJxo5s=
+			</data>
+		</dict>
+		<key>Headers/IDLFaceColorfulManager.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			1PBpf1Iszqkhj/koqWOdtVAzyeM=
+			</data>
+			<key>hash2</key>
+			<data>
+			4vb9rk3mvCScNw49PxBRrr9kk4rWi3+TZtI/Iu0wNTs=
 			</data>
 		</dict>
 		<key>Headers/IDLFaceDetectionManager.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			3FgLOS0NvbMFpGRtqvEJlav7MuI=
+			WnriszBcLhftWqcjgmjAQx+44cg=
 			</data>
 			<key>hash2</key>
 			<data>
-			5kMvOke/ASfe/WAEL97lR3CVaA99NKplFzR7rU4+nvA=
+			71YK4i40LoR4fgRU8XSY+YE+Wq7HADn0f/QYVNHqrR0=
+			</data>
+		</dict>
+		<key>Headers/IDLFaceDistanceLivenessManager.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			f+LOmF5OTodVawztM5BiLJnoPZ8=
+			</data>
+			<key>hash2</key>
+			<data>
+			OhIKZxxQltiewt2fiQdEQMXcQSu/2NQVvO0h8CLG/z4=
 			</data>
 		</dict>
 		<key>Headers/IDLFaceLivenessManager.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			VbXN+PK0Q7IfahU2MI0U5SaPHIQ=
+			i/gPrWk5ygLXKDv7aAj7LT6Ovns=
 			</data>
 			<key>hash2</key>
 			<data>
-			/Hk63uC19rBPuUOElYDIMMETOhhWGNf16+qpnjOWbBc=
+			04RJ7gamTrhEx2pgPH6uBlQTAEk5sw3bg7Y61x/bG/8=
 			</data>
 		</dict>
 		<key>Headers/IDLFaceSDK.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			4jVunSoXEW6EIui6HmQGQ/B7GgU=
+			XUe6dCViRpER1DOhDkVfKZz7bx4=
 			</data>
 			<key>hash2</key>
 			<data>
-			lgQ9lUWcrFfTCL6Di9EwgliVBVZwbncZINzCfW4idDE=
+			n90rYODAj7QpntvsB5qvmsqacWGu8gJ0QzOGgUueMMs=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			uTVmiSBEgQ4Qw0TMMpcn7pr7ssU=
+			OrV1WXXptrXRDhtqhJbKZ6wTcKE=
 			</data>
 			<key>hash2</key>
 			<data>
-			2UWkZrJMmZYFFeU4C525GWZ73nY7N7bcJ+9yd1WwEos=
+			0LWk5s8d00Vurh3nsnKzg6VG1hKBjmexv7SnWsI6As0=
 			</data>
 		</dict>
 	</dict>

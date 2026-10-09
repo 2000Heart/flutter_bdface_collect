@@ -18,6 +18,7 @@ typedef NS_ENUM(NSUInteger, DetectRemindCode) {
     DetectRemindCodeOK = 0, //成功
     DetectRemindCodeBeyondPreviewFrame,    //出框
     DetectRemindCodeNoFaceDetected, //没有检测到人脸
+    DetectRemindCodeFaceMoreThanOneDetected, //检测到多个人脸
     DetectRemindCodeMuchIllumination,
     DetectRemindCodePoorIllumination,   //光照不足
     DetectRemindCodeImageBlured,    //图像模糊
@@ -36,16 +37,7 @@ typedef NS_ENUM(NSUInteger, DetectRemindCode) {
     DetectRemindCodeOcclusionChinCoutour,  //下颚有遮挡
     DetectRemindCodeTimeout,   //超时
     DetectRemindCodeVerifyInitError,          //鉴权失败
-//    DetectRemindCodeVerifyDecryptError,
-//    DetectRemindCodeVerifyInfoFormatError,
-//    DetectRemindCodeVerifyExpired,
-//    DetectRemindCodeVerifyMissRequiredInfo,
-//    DetectRemindCodeVerifyInfoCheckError,
-//    DetectRemindCodeVerifyLocalFileError,
-//    DetectRemindCodeVerifyRemoteDataError,
-//    DetectRemindCodeDataHitLast
-    DetectRemindCodeConditionMeet,
-    DetectRemindCodeDataHitOne
+    DetectRemindCodeSilentNoPass, //活体阈值偏低
 };
 
 typedef NS_ENUM(NSUInteger, TrackDetectRemindCode) {
@@ -68,7 +60,6 @@ typedef NS_ENUM(NSUInteger, TrackDetectRemindCode) {
 
 typedef void (^DetectStrategyCompletion) (FaceInfo * faceinfo,NSDictionary * images, DetectRemindCode remindCode);
 
-//typedef void (^TrackDetectStrategyCompletion) (NSArray * faceArray, TrackDetectRemindCode remindCode);
 
 @interface IDLFaceDetectionManager : NSObject
 
@@ -79,14 +70,16 @@ typedef void (^DetectStrategyCompletion) (FaceInfo * faceinfo,NSDictionary * ima
 /**
  * 人脸采集，成功之后返回扣图图片，原始图片
  * @param image 镜头拿到的图片
- * @param detectRect 预览的Rect
- * @param previewRect 检测的Rect
+ * @param detectRect 检测的Rect
+ * @param previewRect 预览的Rect
  * return completion 回调信息
  */
 - (void)detectStratrgyWithNormalImage:(UIImage *)image previewRect:(CGRect)previewRect detectRect:(CGRect)detectRect completionHandler:(DetectStrategyCompletion)completion;
 
 
 - (void)reset;
+
+- (void)resetTime;
 
 -(void)startInitial;
 

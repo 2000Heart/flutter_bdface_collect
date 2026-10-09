@@ -31,8 +31,12 @@ import android.widget.TextView;
 import com.baidu.idl.face.platform.FaceConfig;
 import com.baidu.idl.face.platform.FaceSDKManager;
 import com.baidu.idl.face.platform.FaceStatusNewEnum;
-import com.baidu.idl.face.platform.IDetectStrategy;
-import com.baidu.idl.face.platform.IDetectStrategyCallback;
+import com.baidu.idl.face.platform.ILivenessStrategy;
+import com.baidu.idl.face.platform.ILivenessStrategyCallback;
+import com.baidu.idl.face.platform.ILivenessViewCallback;
+import com.baidu.idl.face.platform.LivenessTypeEnum;
+import com.baidu.idl.face.platform.model.ActionLiveInfo;
+import com.baidu.idl.face.platform.model.FaceExtInfo;
 import com.baidu.idl.face.platform.model.ImageInfo;
 import com.baidu.idl.face.platform.utils.APIUtils;
 import com.baidu.idl.face.platform.utils.Base64Utils;
@@ -57,7 +61,8 @@ public class FaceDetectActivity extends Activity implements
         Camera.PreviewCallback,
         Camera.ErrorCallback,
         VolumeUtils.VolumeCallback,
-        IDetectStrategyCallback {
+        ILivenessStrategyCallback,
+        ILivenessViewCallback {
 
     public static final String TAG = FaceDetectActivity.class.getSimpleName();
 
@@ -76,7 +81,7 @@ public class FaceDetectActivity extends Activity implements
     public View mViewBg;
     // 人脸信息
     protected FaceConfig mFaceConfig;
-    protected IDetectStrategy mIDetectStrategy;
+    protected ILivenessStrategy mILivenessStrategy;
     // 显示Size
     private Rect mPreviewRect = new Rect();
     protected int mDisplayWidth = 0;
@@ -164,8 +169,8 @@ public class FaceDetectActivity extends Activity implements
                 mIsEnableSound = !mIsEnableSound;
                 mSoundView.setImageResource(mIsEnableSound ?
                         R.mipmap.icon_titlebar_voice2 : R.drawable.collect_image_voice_selector);
-                if (mIDetectStrategy != null) {
-                    mIDetectStrategy.setDetectStrategySoundEnable(mIsEnableSound);
+                if (mILivenessStrategy != null) {
+                    mILivenessStrategy.setLivenessStrategySoundEnable(mIsEnableSound);
                 }
             }
         });
@@ -203,8 +208,8 @@ public class FaceDetectActivity extends Activity implements
 
     @Override
     public void onPause() {
-        if (mIDetectStrategy != null) {
-            mIDetectStrategy.reset();
+        if (mILivenessStrategy != null) {
+            mILivenessStrategy.reset();
         }
         super.onPause();
         VolumeUtils.unRegisterVolumeReceiver(this, mVolumeReceiver);
@@ -232,8 +237,8 @@ public class FaceDetectActivity extends Activity implements
                 mIsEnableSound = cv > 0;
                 mSoundView.setImageResource(mIsEnableSound
                         ? R.mipmap.icon_titlebar_voice2 : R.mipmap.icon_titlebar_voice1);
-                if (mIDetectStrategy != null) {
-                    mIDetectStrategy.setDetectStrategySoundEnable(mIsEnableSound);
+                if (mILivenessStrategy != null) {
+                    mILivenessStrategy.setLivenessStrategySoundEnable(mIsEnableSound);
                 }
             }
         } catch (Exception ex) {
@@ -304,8 +309,8 @@ public class FaceDetectActivity extends Activity implements
         // 设置后无效，camera.setDisplayOrientation方法有效
         mCameraParam.set("rotation", degree);
         mPreviewDegree = degree;
-        if (mIDetectStrategy != null) {
-            mIDetectStrategy.setPreviewDegree(degree);
+        if (mILivenessStrategy != null) {
+            mILivenessStrategy.setPreviewDegree(degree);
         }
 
         // 以屏幕分辨率为基准选取分辨率
@@ -359,9 +364,9 @@ public class FaceDetectActivity extends Activity implements
         if (mSurfaceHolder != null) {
             mSurfaceHolder.removeCallback(this);
         }
-        if (mIDetectStrategy != null) {
-            mIDetectStrategy.reset();
-            mIDetectStrategy = null;
+        if (mILivenessStrategy != null) {
+            mILivenessStrategy.reset();
+            mILivenessStrategy = null;
         }
     }
 
@@ -440,16 +445,16 @@ public class FaceDetectActivity extends Activity implements
             return;
         }
 
-        if (mIDetectStrategy == null && mFaceDetectRoundView != null && mFaceDetectRoundView.getRound() > 0) {
-            mIDetectStrategy = FaceSDKManager.getInstance().getDetectStrategyModule();
-            mIDetectStrategy.setPreviewDegree(mPreviewDegree);
-            mIDetectStrategy.setDetectStrategySoundEnable(mIsEnableSound);
+        if (mILivenessStrategy == null && mFaceDetectRoundView != null && mFaceDetectRoundView.getRound() > 0) {
+            mILivenessStrategy = FaceSDKManager.getInstance().getSilenceLiveStrategyModule(this);
+            mILivenessStrategy.setPreviewDegree(mPreviewDegree);
+            mILivenessStrategy.setLivenessStrategySoundEnable(mIsEnableSound);
 
             Rect detectRect = FaceDetectRoundView.getPreviewDetectRect(mDisplayWidth, mPreviewHight, mPreviewWidth);
-            mIDetectStrategy.setDetectStrategyConfig(mPreviewRect, detectRect, this);
+            mILivenessStrategy.setLivenessStrategyConfig(null, mPreviewRect, detectRect, this);
         }
-        if (mIDetectStrategy != null) {
-            mIDetectStrategy.detectStrategy(data);
+        if (mILivenessStrategy != null) {
+            mILivenessStrategy.livenessStrategy(data);
         }
     }
 
@@ -458,9 +463,10 @@ public class FaceDetectActivity extends Activity implements
     }
 
     @Override
-    public void onDetectCompletion(FaceStatusNewEnum status, String message,
+    public void onCollectCompletion(FaceStatusNewEnum status, String message,
                                    HashMap<String, ImageInfo> base64ImageCropMap,
-                                   HashMap<String, ImageInfo> base64ImageSrcMap) {
+                                   HashMap<String, ImageInfo> base64ImageSrcMap,
+                                   int currentLivenessCount) {
         if (mIsCompletion) {
             return;
         }
@@ -471,6 +477,54 @@ public class FaceDetectActivity extends Activity implements
             mIsCompletion = true;
             saveAllImage(base64ImageCropMap, base64ImageSrcMap);
         }
+    }
+
+    @Override
+    public void setCurrentLiveType(LivenessTypeEnum liveType) {
+    }
+
+    @Override
+    public void viewReset() {
+    }
+
+    @Override
+    public void animStop() {
+    }
+
+    @Override
+    public void setFaceInfo(FaceExtInfo faceInfo) {
+    }
+
+    @Override
+    public void setLiveScore(float liveScore) {
+    }
+
+    @Override
+    public void setBackgroundColor(int currentColor, int preColor) {
+    }
+
+    @Override
+    public void setTimeDistance(long timeDistance) {
+    }
+
+    @Override
+    public void setQualityInfo(String qualityRemind, float currentValue, float thresholdValue) {
+    }
+
+    @Override
+    public void setActionInfo(ActionLiveInfo info) {
+    }
+
+    @Override
+    public void setCurrentDistanceType(int distanceType) {
+    }
+
+    @Override
+    public void setActionCountDown(long l) {
+    }
+
+    @Override
+    public void startRecordVideo(boolean lostFaceId) {
     }
 
     private void onRefreshView(FaceStatusNewEnum status, String message) {

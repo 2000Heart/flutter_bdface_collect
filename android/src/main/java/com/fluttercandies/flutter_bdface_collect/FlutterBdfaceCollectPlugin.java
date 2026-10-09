@@ -6,6 +6,7 @@ import android.content.Intent;
 import androidx.annotation.NonNull;
 
 import com.baidu.idl.face.platform.FaceConfig;
+import com.baidu.idl.face.platform.FaceConfigHelper;
 import com.baidu.idl.face.platform.FaceEnvironment;
 import com.baidu.idl.face.platform.FaceSDKManager;
 import com.baidu.idl.face.platform.LivenessTypeEnum;
@@ -234,7 +235,7 @@ public class FlutterBdfaceCollectPlugin implements FlutterPlugin, MethodCallHand
         config.setFaceFarRatio(faceFarRatio.floatValue());
         config.setFaceClosedRatio(faceClosedRatio.floatValue());
         // 设置 加密类型，0：Base64加密，上传时image_sec传false；1：百度加密文件加密，上传时image_sec传true
-        config.setSecType(secType);
+        FaceConfigHelper.setSecType(config, secType);
         // 设置 开启提示音
         config.setSound(sound);
         // 检测超时设置
@@ -265,7 +266,14 @@ public class FlutterBdfaceCollectPlugin implements FlutterPlugin, MethodCallHand
                     break;
             }
         }
-        config.setLivenessTypeList(livenessTypeEnums);
+        boolean openActionLive = !livenessTypeEnums.isEmpty();
+        config.setIsOpenActionLive(openActionLive);
+        config.setIsOpenColorLive(false);
+        config.setIsOpenDistanceLive(false);
+        if (openActionLive) {
+            // 副作用：写入 selected liveness list（新 SDK 已移除 setLivenessTypeList）
+            config.getLivenessTypeList(livenessTypeEnums, livenessTypeEnums.size());
+        }
         FaceSDKManager.getInstance().setFaceConfig(config);
         return livenessTypeEnums.size();
     }

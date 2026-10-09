@@ -40,6 +40,7 @@ import com.baidu.idl.face.platform.ILivenessStrategyCallback;
 import com.baidu.idl.face.platform.ILivenessViewCallback;
 import com.baidu.idl.face.platform.LivenessTypeEnum;
 import com.baidu.idl.face.platform.manager.TimeManager;
+import com.baidu.idl.face.platform.model.ActionLiveInfo;
 import com.baidu.idl.face.platform.model.FaceExtInfo;
 import com.baidu.idl.face.platform.model.ImageInfo;
 import com.baidu.idl.face.platform.utils.APIUtils;
@@ -253,7 +254,7 @@ public class FaceLivenessActivity extends BaseActivity implements
         VolumeUtils.unRegisterVolumeReceiver(this, mVolumeReceiver);
         mVolumeReceiver = null;
         mFaceDetectRoundView.setProcessCount(0,
-                mFaceConfig.getLivenessTypeList().size());
+                mFaceConfig.getSelectedLivenessTypeList().size());
         super.onPause();
         stopPreview();
         mIsCompletion = false;
@@ -487,14 +488,17 @@ public class FaceLivenessActivity extends BaseActivity implements
         }
 
         if (mILivenessStrategy == null) {
-            mILivenessStrategy = FaceSDKManager.getInstance().getLivenessStrategyModule(this);
+            mILivenessStrategy = FaceSDKManager.getInstance().getActionLiveStrategyModule(this);
             mILivenessStrategy.setPreviewDegree(mPreviewDegree);
             mILivenessStrategy.setLivenessStrategySoundEnable(mIsEnableSound);
 
             Rect detectRect = FaceDetectRoundView.getPreviewDetectRect(
                     mDisplayWidth, mPreviewHight, mPreviewWidth);
+            List<LivenessTypeEnum> actionList = mFaceConfig.getSelectedLivenessTypeList();
+            int actionCount = actionList == null ? 0 : actionList.size();
             mILivenessStrategy.setLivenessStrategyConfig(
-                    mFaceConfig.getLivenessTypeList(), mPreviewRect, detectRect, this);
+                    mFaceConfig.getLivenessTypeList(actionList, actionCount),
+                    mPreviewRect, detectRect, this);
         }
         mILivenessStrategy.livenessStrategy(data);
     }
@@ -504,7 +508,7 @@ public class FaceLivenessActivity extends BaseActivity implements
     }
 
     @Override
-    public void onLivenessCompletion(FaceStatusNewEnum status, String message,
+    public void onCollectCompletion(FaceStatusNewEnum status, String message,
                                      HashMap<String, ImageInfo> base64ImageCropMap,
                                      HashMap<String, ImageInfo> base64ImageSrcMap, int currentLivenessCount) {
         if (mIsCompletion) {
@@ -531,7 +535,7 @@ public class FaceLivenessActivity extends BaseActivity implements
                 mFaceDetectRoundView.setTipTopText(message);
                 mFaceDetectRoundView.setTipSecondText("");
                 mFaceDetectRoundView.setProcessCount(currentLivenessCount,
-                        mFaceConfig.getLivenessTypeList().size());
+                        mFaceConfig.getSelectedLivenessTypeList().size());
                 // onRefreshSuccessView(true);
                 stopAnim();
                 break;
@@ -545,7 +549,7 @@ public class FaceLivenessActivity extends BaseActivity implements
                 mFaceDetectRoundView.setTipTopText(message);
                 mFaceDetectRoundView.setTipSecondText("");
                 mFaceDetectRoundView.setProcessCount(currentLivenessCount,
-                        mFaceConfig.getLivenessTypeList().size());
+                        mFaceConfig.getSelectedLivenessTypeList().size());
                 // onRefreshTipsView(false, message);
                 // onRefreshSuccessView(false);
                 break;
@@ -556,13 +560,13 @@ public class FaceLivenessActivity extends BaseActivity implements
                 mFaceDetectRoundView.setTipTopText("请保持正脸");
                 mFaceDetectRoundView.setTipSecondText(message);
                 mFaceDetectRoundView.setProcessCount(currentLivenessCount,
-                        mFaceConfig.getLivenessTypeList().size());
+                        mFaceConfig.getSelectedLivenessTypeList().size());
                 // onRefreshSuccessView(false);
                 // onRefreshTipsView(true, message);
                 break;
             case FaceLivenessActionCodeTimeout:    // 动作超时，播放教程动画
                 mFaceDetectRoundView.setProcessCount(currentLivenessCount,
-                        mFaceConfig.getLivenessTypeList().size());
+                        mFaceConfig.getSelectedLivenessTypeList().size());
                 // 帧动画开启
                 if (mRelativeAddImageView.getVisibility() == View.INVISIBLE) {
                     mRelativeAddImageView.setVisibility(View.VISIBLE);
@@ -580,7 +584,7 @@ public class FaceLivenessActivity extends BaseActivity implements
                 mFaceDetectRoundView.setTipTopText("请保持正脸");
                 mFaceDetectRoundView.setTipSecondText(message);
                 mFaceDetectRoundView.setProcessCount(currentLivenessCount,
-                        mFaceConfig.getLivenessTypeList().size());
+                        mFaceConfig.getSelectedLivenessTypeList().size());
                 // onRefreshSuccessView(false);
                 // onRefreshTipsView(false, message);
                 break;
@@ -646,6 +650,39 @@ public class FaceLivenessActivity extends BaseActivity implements
         // if (mFaceDetectRoundView != null) {
         //     mFaceDetectRoundView.setFaceInfo(faceInfo);
         // }
+    }
+
+
+    @Override
+    public void setLiveScore(float liveScore) {
+    }
+
+    @Override
+    public void setBackgroundColor(int currentColor, int preColor) {
+    }
+
+    @Override
+    public void setTimeDistance(long timeDistance) {
+    }
+
+    @Override
+    public void setQualityInfo(String qualityRemind, float currentValue, float thresholdValue) {
+    }
+
+    @Override
+    public void setActionInfo(ActionLiveInfo info) {
+    }
+
+    @Override
+    public void setCurrentDistanceType(int distanceType) {
+    }
+
+    @Override
+    public void setActionCountDown(long l) {
+    }
+
+    @Override
+    public void startRecordVideo(boolean lostFaceId) {
     }
 
     private void stopAnim() {

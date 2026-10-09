@@ -38,25 +38,35 @@
     if (self.isImageSuccess){
            return;
     }
-    
-    int typeDigits[] = {18, 23, 31, 31, 31, 31};
-    self.imageDict = [[NSMutableDictionary alloc] init];
-    for (int i = 0; i < 6; i++){
-        NSMutableArray<UIImage *> *imageArr = [[NSMutableArray alloc] init];
-        for (int k = 1; k <= typeDigits[i]; k++){
-            NSString *imageName;
-            if (k < 10){
-                imageName = [NSString stringWithFormat:@"%d_0%d", i, k];
-            } else {
-                imageName = [NSString stringWithFormat:@"%d_%d", i, k];
-            }
-            NSString * path = [FACESDK_ACTION_BUNDLE pathForResource:imageName ofType:@"png"];
-            UIImage *image = [UIImage imageNamed:path];
-            [imageArr addObject:image];
-        }
-        self.imageDict[[NSString stringWithFormat:@"%d", i]] = imageArr;
+
+    NSBundle *actionBundle = FACESDK_ACTION_BUNDLE;
+    if (actionBundle == nil) {
+        NSLog(@"BDFaceRemindAnimationView: action image bundle not found");
+        return;
     }
-    self.isImageSuccess = true;
+
+    // New SDK ships 2 frames per action type (0~7): Eye/Mouth/YawRight/YawLeft/PitchUp/PitchDown/UpDown/ShakeHead
+    const int actionTypeCount = 8;
+    const int framesPerAction = 2;
+    self.imageDict = [[NSMutableDictionary alloc] init];
+    for (int i = 0; i < actionTypeCount; i++){
+        NSMutableArray<UIImage *> *imageArr = [[NSMutableArray alloc] init];
+        for (int k = 1; k <= framesPerAction; k++){
+            NSString *imageName = [NSString stringWithFormat:@"%d_0%d", i, k];
+            NSString *path = [actionBundle pathForResource:imageName ofType:@"png"];
+            if (path.length == 0) {
+                continue;
+            }
+            UIImage *image = [UIImage imageWithContentsOfFile:path];
+            if (image != nil) {
+                [imageArr addObject:image];
+            }
+        }
+        if (imageArr.count > 0) {
+            self.imageDict[[NSString stringWithFormat:@"%d", i]] = imageArr;
+        }
+    }
+    self.isImageSuccess = self.imageDict.count > 0;
 }
 
 - (BOOL)isActionAnimating {
@@ -70,19 +80,18 @@
     }
     
     NSMutableArray<UIImage *> *imageArr = self.imageDict[[NSString stringWithFormat:@"%d", type]];
+    if (imageArr.count == 0) {
+        return;
+    }
     
     // 设置动画图片
     self.imageView.animationImages = imageArr;
-    
-    // 设置动画图片
-   // self.imageView.animationImages = self.imageArr;
 
     // 设置动画的播放次数
     self.imageView.animationRepeatCount = 1;
 
-    // 设置播放时长
-    // 1秒30帧, 一张图片的时间 = 1/30 = 0.03333 20 * 0.0333
-    self.imageView.animationDuration = 3.0;
+    // 新资源仅 2 帧，缩短时长避免拖沓
+    self.imageView.animationDuration = 1.0;
 
     // 开始动画
     [self.imageView startAnimating];

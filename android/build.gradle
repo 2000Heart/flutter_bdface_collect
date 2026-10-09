@@ -4,46 +4,40 @@ version '1.0'
 buildscript {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.4.1'
+        classpath 'com.android.tools.build:gradle:8.1.0'
     }
 }
 
 rootProject.allprojects {
     repositories {
         google()
-        jcenter()
-        flatDir { dirs project(":flutter_bdface_collect").file("libs") }
+        mavenCentral()
+        maven {
+            url "${project(':flutter_bdface_collect').projectDir}/repo"
+        }
     }
 }
 
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 31
+    namespace 'com.fluttercandies.flutter_bdface_collect'
+    compileSdk 34
 
     defaultConfig {
-        minSdkVersion 22
+        minSdk 22
     }
 
-    sourceSets {
-        main.jniLibs.srcDir 'libs'
-    }
-    lintOptions {
+    lint {
         disable 'InvalidPackage'
     }
     compileOptions {
-        sourceCompatibility = '1.8'
-        targetCompatibility = '1.8'
-    }
-    packagingOptions {
-        merge 'res/values/values.xml'
-        merge 'AndroidManifest.xml'
-        merge 'R.txt'
-        merge 'classes.jar'
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
     buildTypes {
         release {
@@ -52,7 +46,7 @@ android {
     }
 }
 
-
 dependencies {
-    implementation(name: "faceplatform-release-4.1.5", ext: "aar")
+    api 'com.baidu.idl:faceplatform:6.4.6.1'
+    api 'com.baidu.idl:faceplatform-ui:6.4.6'
 }

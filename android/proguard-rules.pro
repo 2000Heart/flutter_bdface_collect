@@ -1,8 +1,13 @@
-#-keep class com.baidu.** {*;}
-#-keep class vi.com.** {*;}
-#-dontwarn com.baidu.**
-
--keep class com.baidu.vis.unified.license {*;}
--keep class com.baidu.liantian {*;}
--keep class com.baidu.baidusec.** {*;}
+-dontwarn com.baidu.idl.**
+-keep class com.baidu.idl.** { *; }
+-dontwarn com.baidu.vis.**
+-keep class com.baidu.vis.** { *; }
+-dontwarn com.baidu.sec.**
+-keep class com.baidu.sec.** {*;}
+-dontwarn com.baidu.liantian.**
+-keep class com.baidu.liantian.** { *; }
+-dontwarn com.baidu.protect.**
+-keep class com.baidu.protect.** { *; }
+-dontwarn com.baidu.baidusec.**
+-keep class com.baidu.baidusec.** { *; }
 -keep class com.baidu.idl.main.facesdk.* {*;}

@@ -41,6 +41,14 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [[IDLFaceLivenessManager sharedInstance] startInitial];
+    if (self.livenessArray.count > 0) {
+        [[IDLFaceLivenessManager sharedInstance] livenesswithList:self.livenessArray
+                                                            order:self.order
+                                                 numberOfLiveness:self.numberOfLiveness];
+    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self warningStatus:CommonStatus warning:@"请把脸移入框内" conditionMeet:false];
+    });
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -74,7 +82,7 @@
     if (self.hasFinished) {
         return;
     }
-    
+
     dispatch_async(dispatch_get_main_queue(), ^{
         self.isAnimating = [self.remindAnimationView isActionAnimating];
     });
@@ -300,9 +308,26 @@
                 }];
                 break;
             }
-            case LivenessRemindCodeConditionMeet: {
+            case LivenessRemindCodeFaceMoreThanOneDetected:
+                [self warningStatus:CommonStatus warning:@"请保证检测框内只有一张人脸" conditionMeet:false];
+                [self singleActionSuccess:false];
                 break;
-            }
+            case LivenessRemindCodeSilentNoPass:
+                [self warningStatus:CommonStatus warning:@"请保持正脸" conditionMeet:false];
+                [self singleActionSuccess:false];
+                break;
+            case LivenessRemindCodeLiveUpDown:
+                [self warningStatus:CommonStatus warning:@"请点点头" conditionMeet:true];
+                [self singleActionSuccess:false];
+                break;
+            case LivenessRemindCodeActionNotMatch:
+                [self warningStatus:CommonStatus warning:@"请按照提示做动作" conditionMeet:false];
+                [self singleActionSuccess:false];
+                break;
+            case LivenessRemindCodeMuchIllumination:
+                [self warningStatus:CommonStatus warning:@"请使环境光线再暗些" conditionMeet:false];
+                [self singleActionSuccess:false];
+                break;
             default:
                 break;
         }

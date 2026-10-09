@@ -8,77 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-
-
-typedef NS_ENUM(NSInteger, FaceLivenessActionType) {
-    FaceLivenessActionTypeLiveEye = 0,
-    FaceLivenessActionTypeLiveMouth = 1,
-    FaceLivenessActionTypeLiveYawRight = 2,
-    FaceLivenessActionTypeLiveYawLeft = 3,
-    FaceLivenessActionTypeLivePitchUp = 4,
-    FaceLivenessActionTypeLivePitchDown = 5,
-    FaceLivenessActionTypeLiveYaw = 6,
-    FaceLivenessActionTypeNoAction = 7,
-};
-
-typedef NS_ENUM(NSUInteger, ResultCode) {
-    ResultCodeOK,
-    ResultCodePitchOutofDownRange,  //头部偏低
-    ResultCodePitchOutofUpRange,   //头部偏高
-    ResultCodeYawOutofLeftRange,     //头部偏左
-    ResultCodeYawOutofRightRange,     //头部偏右
-    ResultCodeTooBrightIllumination,   // 光线过亮
-    ResultCodePoorIllumination,      //光照不足
-    ResultCodeNoFaceDetected,    //没有检测到人脸
-    ResultCodeDataNotReady,
-    ResultCodeDataHitOne, //采集到一张照片
-    ResultCodeDataHitLast, //采集到最后一张照片
-    ResultCodeImageBlured,     //图像模糊
-    ResultCodeOcclusionLeftEye,  //左眼有遮挡
-    ResultCodeOcclusionRightEye, //右眼有遮挡
-    ResultCodeOcclusionNose,     //鼻子有遮挡
-    ResultCodeOcclusionMouth,    //嘴巴有遮挡
-    ResultCodeOcclusionLeftContour,  //左脸颊有遮挡
-    ResultCodeOcclusionRightContour, //右脸颊有遮挡
-    ResultCodeOcclusionChinCoutour,  //下颚有遮挡
-    ResultCodeVerifyInitError,          //鉴权失败
-    ResultCodeVerifyDecryptError,
-    ResultCodeVerifyInfoFormatError,
-    ResultCodeVerifyExpired,
-    ResultCodeVerifyMissRequiredInfo,
-    ResultCodeVerifyInfoCheckError,
-    ResultCodeVerifyLocalFileError,
-    ResultCodeVerifyRemoteDataError,
-    ResultCodeLeftEyeClosed,
-    ResultCodeRightEyeClosed,
-    ResultCodeUnknowType            //未知类型
-};
-
-
-typedef NS_ENUM(NSUInteger, TrackResultCode) {
-    TrackResultCodeOK,
-    TrackResultCodeImageBlured,     // 图像模糊
-    TrackResultCodePoorIllumination, // 光照不行
-    TrackResultCodeNoFaceDetected,    //没有检测到人脸
-    TrackResultCodeOcclusionLeftEye,  //左眼有遮挡
-    TrackResultCodeOcclusionRightEye, //右眼有遮挡
-    TrackResultCodeOcclusionNose,     //鼻子有遮挡
-    TrackResultCodeOcclusionMouth,    //嘴巴有遮挡
-    TrackResultCodeOcclusionLeftContour,  //左脸颊有遮挡
-    TrackResultCodeOcclusionRightContour, //右脸颊有遮挡
-    TrackResultCodeOcclusionChinCoutour,  //下颚有遮挡
-    TrackResultCodeVerifyInitError,          //鉴权失败
-    TrackResultCodeVerifyDecryptError,
-    TrackResultCodeVerifyInfoFormatError,
-    TrackResultCodeVerifyExpired,
-    TrackResultCodeVerifyMissRequiredInfo,
-    TrackResultCodeVerifyInfoCheckError,
-    TrackResultCodeVerifyLocalFileError,
-    TrackResultCodeVerifyRemoteDataError,
-    TrackResultCodeUnknowType            //未知类型
-};
-
-
+#import "BDFaceDef.h"
 @class FaceInfo;
 @class FaceLivenessState;
 @class FaceCropImageInfo;
@@ -88,14 +18,72 @@ typedef NS_ENUM(NSUInteger, TrackResultCode) {
 @property (nonatomic, assign) CGFloat conditionTimeout;
 /* 语音超时*/
 @property (nonatomic, assign) CGFloat intervalOfVoiceRemind;
+/* 单个动作超时时间 默认6秒 */
+@property (nonatomic, assign) CGFloat singleActionTime;
+/* 单个动作剩余时间 */
+@property (nonatomic, assign) CGFloat singleActionRemainTime;
 /* 输出图像个数 */
 @property (nonatomic, assign) int imageNum;
-/* 图像加密类型，默认0 */
+/* 图像加密类型，默认0
+ 0：输出未加密图片
+ 1：输出加密图片
+ 2：输出加密和未加密图片
+ */
 @property (nonatomic, assign) int imageEncrypteType;
-/* 图像加密类型，默认0 */
+/*  人脸过远框比例 默认：0.3 */
 @property (nonatomic, assign) float minRectScale;
+/*  人脸过近框比例 默认：0.5 */
+@property (nonatomic, assign) float maxRectScale;
+/*  视频录制能力 */
+@property (nonatomic, assign) BOOL recordAbility;
+/*  炫彩颜色判断能力 */
+@property (nonatomic, assign) BOOL colorJudgeAbility;
 /* 图片计数器，用来计当前图片的数量*/
 @property (nonatomic, assign) int currentNum;
+/*  活体检测阈值 默认：0.8 */
+@property (nonatomic, assign) float silentLiveThresholdValue;
+/*  活体检测阈值 默认：0.8 */
+@property (nonatomic, assign) float livenessThresholdValue;
+/*  活体检测阈值 默认：0.8 */
+@property (nonatomic, assign) float colorLiveThresholdValue;
+/*  是否压缩图片 默认：压缩 */
+@property (nonatomic, assign) BOOL isCompressImage;
+/*  压缩图片大小 默认：300kb */
+@property (nonatomic, assign) int compressValue;
+/*  是否超时弹窗 默认：弹窗 */
+@property (nonatomic, assign) BOOL isPopWindow;
+/*  眨眼、张嘴动作添加遮挡判断 默认：不严格 */
+@property (nonatomic, assign) BOOL isStrict;
+/*  数据埋点 默认：不开启 */
+@property (nonatomic, assign) BOOL isSaveEventLogs;
+
+/*  是否开启动作失败切换动作 默认：关闭 */
+@property (nonatomic, assign) BOOL isChangeAction;
+
+/*  是否开启防暴力动作检测 默认：关闭 */
+@property (nonatomic, assign) BOOL isOpenActionAntiCrack;
+
+/*  是否开启随机动活体动作 默认：开启 */
+@property (nonatomic, assign) BOOL  isLivenessRandom;       
+
+/* 活体、炫彩剩余时间*/
+@property (nonatomic, assign) CGFloat livenessColorTime;
+
+/* 中英文切换标识  默认 ZH_CN*/
+@property (nonatomic, copy) NSString *languageType;
+
+/*是否开启局部动作活体 默认：关闭*/
+@property (nonatomic, assign) BOOL isOpenLocalGlobalLivenessType;
+
+/*局部动作随机数量 默认为1*/
+@property (nonatomic, assign) int localActionRandomNumber;
+
+/*全局动作随机数量 默认为2*/
+@property (nonatomic, assign) int globalActionRandomNumber;
+
+/*远程拉取模型沙盒地址 */
+@property (nonatomic, copy) NSString * fileDocPath;
+
 
 + (instancetype)sharedInstance;
 
@@ -109,11 +97,7 @@ typedef NS_ENUM(NSUInteger, TrackResultCode) {
  */
 - (void)reset;
 
-/**
- * 获取设备zid 公安验证上传
- */
-- (NSString *)getZtoken;
-
+- (void)resetDelay;
 /**
  *  SDK鉴权方法-文件授权
  *  SDK鉴权方法 必须在使用其他方法之前设置，否则会导致SDK不可用
@@ -122,8 +106,11 @@ typedef NS_ENUM(NSUInteger, TrackResultCode) {
  *  @param licensePath 本地鉴权文件路径
  *  @param remoteAuthorize 是否远程更新过期鉴权文件
  */
-- (void)setLicenseID:(NSString *)licenseID andLocalLicenceFile:(NSString *)licensePath andRemoteAuthorize:(BOOL)remoteAuthorize;
-
+- (int)setLicenseID:(NSString *)licenseID andLocalLicenceFile:(NSString *)licensePath andRemoteAuthorize:(BOOL)remoteAuthorize;
+/**
+ *  设置clientId
+ */
+- (void)setBCEClientId:(NSString *)clientId clientSecret:(NSString *)clientSecret;
 /**
  *  初始化采集功能
  */
@@ -153,7 +140,7 @@ typedef NS_ENUM(NSUInteger, TrackResultCode) {
 
 /**
  *  需要检测的最小人脸大小
- *  默认40
+ *  默认100
  */
 - (void)setMinFaceSize:(int)width;
 
@@ -175,6 +162,12 @@ typedef NS_ENUM(NSUInteger, TrackResultCode) {
  * 默认0.31
  */
 -(void)setOccluLeftEyeThreshold:(CGFloat)thr ;
+
+/**
+ * 眼睛闭合置信度
+ * 默认0.7
+ */
+-(void)setEyeCloseThreshold:(CGFloat)thr ;
 
 /**
  * 质量检测遮挡阈值- 右眼遮挡置信度
@@ -293,19 +286,89 @@ typedef NS_ENUM(NSUInteger, TrackResultCode) {
 // - (void)setSilentLiveThreshold:(CGFloat)thr ;
 
 /**
+ * 是否开启口罩检测，非动作活体检测模型true，动作活体检测模型false
+ */
+- (void)setIsCheckMouthMask:(BOOL)isCheck;
+
+/**
+ * 口罩检测阈值配置，默认0.8。
+ * 大于阈值判定为戴口罩，低于阈值判定为未戴口罩
+ */
+- (void)setMouthMaskThreshold:(CGFloat)thr ;
+
+/**
  * 设置原始图片缩放比例，默认1不缩放，scale 阈值0~1
  */
 - (void)setImageWithScale:(CGFloat)scale;
 
-/**
- * 设置图片加密类型，type=0 基于base64 加密；type=1 基于百度安全算法加密
- */
-- (void)setImageEncrypteWithType:(int) type;
 
 /**
  *  人脸过远框比例 默认：0.4
  */
 - (void)setMinRect:(float) minRectScale;
+/**
+ *  人脸过近框比例 默认：0.5
+ */
+- (void)setMaxRect:(float) maxRectScale;
+
+/**
+ *  活体检测阈值 默认：0.8
+ */
+- (void)setSilentLiveThresholdValue:(float) liveThresholdValue;
+
+/**
+ *  活体检测阈值 默认：0.8
+ */
+- (void)setlivenessThresholdValue:(float) liveThresholdValue;
+
+/**
+ *  活体检测阈值 默认：0.8
+ */
+- (void)setcolorliveThresholdValue:(float) liveThresholdValue;
+
+/**
+ *  视频录制能力 默认：关闭
+ */
+- (void)setRecordAbility:(BOOL) recordAbility;
+
+/**
+ *  炫彩颜色判断能力 默认：关闭
+ */
+- (void)setColorJudgeAbility:(BOOL) colorJudgeAbility;
+
+/**
+ *  图片是否压缩 默认：压缩
+ */
+- (void)setIsCompressImage:(BOOL)isCompressImage;
+
+/**
+ *  图片压缩系数单位KB 默认：300Kb
+ */
+- (void)setCompressValue:(int) compressValue;
+
+/**
+ *  是否超时弹窗 默认：弹窗
+ */
+- (void)setIsPopWindow:(BOOL) isPopWindow;
+
+/**
+ *  质量检测闭眼阈值设置 默认：0.8
+ */
+- (void)setEyeCloseValue:(float) eyeCloseValue;
+
+/**
+ *  眨眼、张嘴动作添加遮挡判断 默认：不严格
+ */
+- (void)setIsStrict:(BOOL) isStrict;
+/**
+ *  数据埋点 默认：不开启
+ */
+-(void)setIsSaveEventLogs:(BOOL) isSaveEventLogs;
+
+/**
+ *  中英文切换 默认：ZH_CN
+ */
+- (void)setLanguageType:(NSString *)languageType;
 /**
  * 采集动作验证
  * @param image 检测的图片
@@ -320,7 +383,48 @@ typedef NS_ENUM(NSUInteger, TrackResultCode) {
  * @param actionLiveType 当前要求做的动作
  * @param completion 判断当前动作是否完成，人脸信息状态是否正常
  */
-- (void)livenessWithImage:(UIImage *)image withAction:(FaceLivenessActionType)actionLiveType completion:(void (^)(FaceInfo *faceinfo, FaceLivenessState *state, ResultCode resultCode))completion;
+- (void)livenessWithImage:(UIImage *)image withAction:(FaceLivenessActionType)actionLiveType completion:(void (^)(FaceInfo *faceinfo,  FaceLivenessState *state, ResultCode resultCode))completion;
+
+/**
+ * 炫彩动作验证
+ * @param image 检测的图片
+ * @param isOriginal 是否返回原始图片
+ * @param colorQuality 炫彩当前颜色是否通过质量检测
+ * @param livenessFinished 活体动作是否完成 YES 为活体+炫彩 NO 为单独炫彩
+ * @param completion 判断采集是否完成，人脸信息状态是否正常
+ */
+- (void)colorWithImage:(UIImage *)image isRreturnOriginalValue:(BOOL) isOriginal isColorQuality:(BOOL)colorQuality livenessFinished:(BOOL)livenessFinished completion:(void (^)(FaceInfo *faceinfo, ResultCode resultCode))completion;
+
+/**
+ * 远近活体动作验证
+ * @param image 检测的图片
+ * @param isOriginal 是否返回原始图片
+ * @param completion 判断采集是否完成，人脸信息状态是否正常
+ */
+- (void)distanceLivenessWithImage:(UIImage *)image isRreturnOriginalValue:(BOOL)isOriginal isQuality:(BOOL)isQuality completion:(void (^)(FaceInfo *faceinfo, ResultCode resultCode))completion;
+
+
+/**
+ * 远近活体动作验证
+ * @param image 检测的图片
+ * @param actionLiveType  活体动作类型
+ * return   ResultCode   状态码
+ */
+- (ResultCode)distanceLivenessActionWithImage:(UIImage *)image ActionLiveType:(FaceLivenessActionType)actionLiveType;
+/**
+ * 六颜色炫彩图片得分接口
+ * @param image 当前采集图片
+ * @param color 当前采集图片对应颜色
+ * @param completion 返回错误码，0为成功
+ */
+- (void)colorWithImage:(UIImage *)image color:(NSString *)color completion:(void (^)(FaceInfo *faceinfo, ResultCode resultCode))completion;
+
+- (void)colorLiveGetDataCompletion:(void (^)(FaceInfo *faceinfo, ResultCode resultCode))completion;
+
+/*
+ 图片压缩
+ */
+- (NSData *)compressImageDataWithMaxLength:(NSUInteger)maxLength image:(UIImage *)image;
 
 @end
 
@@ -349,6 +453,14 @@ typedef NS_ENUM(NSUInteger, TrackResultCode) {
  *  动作活体-低头
  */
 @property(nonatomic, assign) BOOL isLivePitchDown;
+/**
+ * 动作活体-摇摇头
+ */
+@property(nonatomic, assign) BOOL isLiveShakeHead;
+/**
+ * 动作活体-点点头
+ */
+@property(nonatomic, assign) BOOL isLiveUpDown;
 @end
 
 @interface FaceCropImageInfo : NSObject
@@ -361,6 +473,19 @@ typedef NS_ENUM(NSUInteger, TrackResultCode) {
  */
 @property (nonatomic,assign) float silentliveScore;
 /**
+ *  炫彩活体RGB 炫彩活体当前颜色
+ */
+@property (nonatomic,assign) int  outPutColorFace;
+
+/**
+ *  炫彩活体RGB 炫彩活体当前颜色
+ */
+@property (nonatomic,assign) float  outPutColorScore;
+/**
+ *  炫彩活体RGB 炫彩活体得分
+ */
+@property (nonatomic,assign) float colorAuraliveScore;
+/**
  *  采集到的矫正，调整宽高图片，会有宽高
  */
 @property (nonatomic ,strong) UIImage *cropImageWithBlack;
@@ -368,6 +493,10 @@ typedef NS_ENUM(NSUInteger, TrackResultCode) {
  *  加密采集到的矫正，调整宽高图片，会有宽高
  */
 @property (nonatomic ,strong) NSString *cropImageWithBlackEncryptStr;
+/**
+ *  未加密采集到的矫正，调整宽高图片，会有宽高
+ */
+@property (nonatomic ,strong) NSString *cropImageWithBlackStr;
 /**
  *  原始图片
  */
@@ -377,9 +506,26 @@ typedef NS_ENUM(NSUInteger, TrackResultCode) {
  */
 @property (nonatomic ,strong) NSString *originalImageEncryptStr;
 /**
+ *  原始图片
+ */
+@property (nonatomic ,strong) NSString *originalImageStr;
+/**
+ * bestimage生成 时间戳
+ */
+@property (nonatomic ,assign) NSTimeInterval ts;
+/**
+ * 标签 near far / 0 1 2
+ */
+@property (nonatomic ,copy) NSString *tag;
+
+/**
  *  排序规则
  */
 - (NSComparisonResult)compareWithImageInfo:(FaceCropImageInfo *)info;
+/*
+ 输出bestimage属性,qualityScore、silentliveScore、ts
+ */
+- (NSDictionary *)toDictioanry;
 @end
 
 @interface FaceInfo : NSObject
@@ -429,6 +575,26 @@ typedef NS_ENUM(NSUInteger, TrackResultCode) {
 @property (nonatomic,assign) float silentliveScore;
 
 /**
+ *  炫彩活体RGB 炫彩活体当前颜色
+ */
+@property (nonatomic,assign) int  outPutColorFace;
+
+/**
+ *  炫彩活体RGB 炫彩活体当前颜色
+ */
+@property (nonatomic,assign) float  outPutColorScore;
+
+/**
+ *  炫彩活体RGB 炫彩活体结果
+ */
+@property (nonatomic,assign) float  outPutColorResult;
+
+/**
+ *  炫彩活体RGB 炫彩活体得分
+ */
+@property (nonatomic,assign) float colorAuraliveScore;
+
+/**
  *  人脸检测得分
  */
 @property (nonatomic, assign) CGFloat score;
@@ -437,5 +603,16 @@ typedef NS_ENUM(NSUInteger, TrackResultCode) {
  * 输出图片结构体，包含图片质量分数，裁剪没有黑边的图片，裁剪有黑边的图片，未裁剪图片，原始图
  */
 @property (nonatomic, strong) FaceCropImageInfo * cropImageInfo;
+
+/**
+ *  炫彩活体-标志炫彩活体当前的质量检测通过
+ */
+@property(nonatomic, assign) BOOL colorQuality;
+
+/*
+ 输出faceinfo基本信息
+ */
+- (NSDictionary *)toDictioanry;
+
 
 @end

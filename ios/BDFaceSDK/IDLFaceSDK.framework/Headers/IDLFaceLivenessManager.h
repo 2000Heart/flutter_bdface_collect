@@ -21,14 +21,16 @@ typedef NS_ENUM(NSInteger, LivenessActionType) {
     LivenessActionTypeLiveYawLeft = 3,
     LivenessActionTypeLivePitchUp = 4,
     LivenessActionTypeLivePitchDown = 5,
-    LivenessActionTypeLiveYaw = 6,
-    LivenessActionTypeNoAction = 7,
+    LivenessActionTypeLiveUpDown = 6,
+    LivenessActionTypeShakeHead = 7,
+    LivenessActionTypeNoAction = 8,
 };
 
 typedef NS_ENUM(NSUInteger, LivenessRemindCode) {
     LivenessRemindCodeOK = 0,   //成功
     LivenessRemindCodeBeyondPreviewFrame,    //出框
     LivenessRemindCodeNoFaceDetected, //没有检测到人脸
+    LivenessRemindCodeFaceMoreThanOneDetected,
     LivenessRemindCodeMuchIllumination,
     LivenessRemindCodePoorIllumination,   //光照不足
     LivenessRemindCodeImageBlured,    //图像模糊
@@ -53,25 +55,19 @@ typedef NS_ENUM(NSUInteger, LivenessRemindCode) {
     LivenessRemindCodeLivePitchUp,   //向上抬头
     LivenessRemindCodeLivePitchDown, //向下低头
     LivenessRemindCodeLiveYaw,   //摇摇头
+    LivenessRemindCodeLiveUpDown, // 点点头
     LivenessRemindCodeSingleLivenessFinished,    //完成一个活体动作
     LivenessRemindActionCodeTimeout, // 当前活体动作超时
     LivenessRemindCodeLeftEyeClosed,
     LivenessRemindCodeRightEyeClosed,
     LivenessRemindCodeVerifyInitError,          //鉴权失败
-//    LivenessRemindCodeVerifyDecryptError,
-//    LivenessRemindCodeVerifyInfoFormatError,
-//    LivenessRemindCodeVerifyExpired,
-//    LivenessRemindCodeVerifyMissRequiredInfo,
-//    LivenessRemindCodeVerifyInfoCheckError,
-//    LivenessRemindCodeVerifyLocalFileError,
-//    LivenessRemindCodeVerifyRemoteDataError,
-    LivenessRemindCodeConditionMeet,
     LivenessRemindCodeFaceIdChanged,    // faceid 发生变化
-    LivenessRemindCodeDataHitOne
-//    LivenessRemindCodeDataHitLast,
+    LivenessRemindCodeSilentNoPass,   //活体分数过低
+    LivenessRemindCodeActionNotMatch, //连续检测到与提示不符动作
 };
 
 typedef void (^LivenessStrategyCompletion) (NSDictionary * images, FaceInfo *faceInfo, LivenessRemindCode remindCode);
+
 typedef void (^LivenessNormalCompletion) (NSDictionary * images, FaceInfo *faceInfo, LivenessRemindCode remindCode);
 
 /**
@@ -82,17 +78,21 @@ typedef void (^LivenessProcess) (float numberOfLiveness, float numberOfSuccess, 
 
 @interface IDLFaceLivenessManager : NSObject
 @property (nonatomic, assign) BOOL enableSound;
+@property (nonatomic, assign) BOOL isColorFailed; //是否由炫彩再次进入活体
 
 + (instancetype)sharedInstance;
 
 /**
  *  人脸活体验证，成功之后返回扣图图片，原始图片
  * @param image 镜头拿到的图片
- * @param detectRect 预览的Rect
- * @param previewRect 检测的Rect
+ * @param detectRect 检测的Rect
+ * @param previewRect 预览的Rect
  * return completion 回调信息
  */
--(void) livenessNormalWithImage:(UIImage *)image previewRect:(CGRect)previewRect detectRect:(CGRect)detectRect completionHandler:(LivenessNormalCompletion)completion;
+-(void) livenessNormalWithImage:(UIImage *)image
+                    previewRect:(CGRect)previewRect
+                     detectRect:(CGRect)detectRect
+              completionHandler:(LivenessNormalCompletion)completion;
 
 /**
  * 活体检测过程中，返回活体总数，当前成功个数，当前活体类型
@@ -102,6 +102,8 @@ typedef void (^LivenessProcess) (float numberOfLiveness, float numberOfSuccess, 
 - (void)reset;
 
 -(void)startInitial;
+
+- (void)resetTime;
 
 /**
  * 返回无黑边的方法

@@ -22,3 +22,8 @@ FOUNDATION_EXPORT const unsigned char IDLFaceSDKVersionString[];
 #import "IDLFaceDetectionManager.h"
 #import "BDFaceUtil.h"
 #import "BDFaceQualityUtil.h"
+#import "IDLFaceColorfulManager.h"
+#import "IDLFaceCallbackManager.h"
+#import "IDLFaceDistanceLivenessManager.h"
+#import "BDFaceSaveFile.h"
+

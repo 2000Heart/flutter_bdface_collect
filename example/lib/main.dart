@@ -52,6 +52,10 @@ class _MyHomePageState extends State<MyHomePage> {
       licenseId = 'flutter_bdface_collect_example-face-android';
     } else if (Platform.isIOS) {
       licenseId = 'flutter_bdface_collect_example-face-ios';
+    } else if (Platform.operatingSystem == 'ohos') {
+      licenseId = 'flutter_bdface_collect_example-face-harmony';
+    } else {
+      licenseId = 'flutter_bdface_collect_example-face-harmony';
     }
     var err = await FlutterBdfaceCollect.instance.init(licenseId);
     if (err != null) print('百度人脸采集初始化失败:$err');

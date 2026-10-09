@@ -17,13 +17,23 @@ a baidu face collect plugin. Only Android and IOS platforms are supported.
   s.source_files = 'Classes/**/*'
   s.public_header_files = 'Classes/**/*.h'
   s.resources           = ['BDFaceSDK/*.bundle']
-  s.resource_bundles = {'BDFaceAssets' => ['Resource/BDFaceAssets/*.png']}
+  s.resource_bundles = {
+    'BDFaceAssets' => ['Resource/BDFaceAssets/*.png'],
+    'flutter_bdface_collect_privacy' => ['Resources/PrivacyInfo.xcprivacy']
+  }
   s.vendored_frameworks = 'BDFaceSDK/*.framework'
-  # s.xcconfig = { 'OTHER_LDFLAGS' => '-ObjC' }
-  s.libraries = ["c++"]
+  s.vendored_libraries = 'BDFaceSDK/libFaceSSDKLib.a'
+  s.libraries = ['c++']
   s.dependency 'Flutter'
   s.platform = :ios, '11.0'
 
-  # Flutter.framework does not contain a i386 slice.
-  s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386' }
+  # Flutter.framework does not contain a i386 slice. New IDLFaceSDK is arm64-only.
+  s.pod_target_xcconfig = {
+    'DEFINES_MODULE' => 'YES',
+    'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386 x86_64',
+    'OTHER_LDFLAGS' => '-ObjC'
+  }
+  s.user_target_xcconfig = {
+    'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386 x86_64'
+  }
 end
