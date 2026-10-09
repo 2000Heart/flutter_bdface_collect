@@ -19,14 +19,20 @@ import {
   LivenessValueModel,
 } from 'facesolutionsdk';
 import {
+  Face,
   InitCallback,
   InitOption,
   LivenessCallback,
   LivenessResult,
 } from 'faceplatformsdk';
-import { ImageInfo } from 'faceplatform';
+import { FaceStatusNewEnum, ImageInfo } from 'faceplatform';
 import { FaceCollectNavHolder } from './FaceCollectNavHolder';
 import { MethodConstants } from './MethodConstants';
+
+class ParsedFaceImages {
+  crop: string = '';
+  src: string = '';
+}
 
 /** FlutterBdfaceCollectPlugin **/
 export default class FlutterBdfaceCollectPlugin implements FlutterPlugin, MethodCallHandler, AbilityAware {
@@ -171,14 +177,89 @@ export default class FlutterBdfaceCollectPlugin implements FlutterPlugin, Method
     if (pending == null) {
       return;
     }
-    const crop = this.pickBestImage(livenessResult.getBase64ImageCropMap(), this.currentSecType);
-    const src = this.pickBestImage(livenessResult.getBase64ImageSrcMap(), this.currentSecType);
+
+    let crop = '';
+    let src = '';
+    const status = livenessResult.getStatus();
+    const isOk = status === FaceStatusNewEnum.OK;
+    if (isOk) {
+      crop = this.pickBestImage(livenessResult.getBase64ImageCropMap(), this.currentSecType);
+      src = this.pickBestImage(livenessResult.getBase64ImageSrcMap(), this.currentSecType);
+      // 鸿蒙金融版成功时 map 常为空，图片在 imageData JSON 中
+      if (crop.length === 0 && src.length === 0) {
+        const parsed = this.parseImagesFromImageData(livenessResult.getImageData());
+        crop = parsed.crop;
+        src = parsed.src;
+      }
+    }
+
     let error = '';
     if (crop.length === 0 && src.length === 0) {
       const message: string = livenessResult.getMessage();
       error = message.length > 0 ? message : 'collect failed';
     }
     pending.success(this.buildCollectPayload(crop, src, error));
+  }
+
+  /**
+   * 解析 LivenessResult.imageData：
+   * {"images":["base64..."],"tags":["1","2","0"]}
+   * tags: "0"=原图, "1"=抠图；其余按最高分/首张兜底。
+   */
+  private parseImagesFromImageData(imageData: string): ParsedFaceImages {
+    const result: ParsedFaceImages = new ParsedFaceImages();
+    if (imageData.length === 0) {
+      return result;
+    }
+    try {
+      const face: Face = JSON.parse(imageData) as Face;
+      const images: Array<string> = face.images;
+      if (images == null || images.length === 0) {
+        return result;
+      }
+      const tags: Array<string> = face.tags != null ? face.tags : [];
+
+      for (let i = 0; i < images.length; i++) {
+        const image: string = images[i];
+        if (image.length === 0) {
+          continue;
+        }
+        const tag: string = i < tags.length ? tags[i] : '';
+        if (tag === '1') {
+          result.crop = image;
+        } else if (tag === '0') {
+          result.src = image;
+        }
+      }
+
+      if (result.crop.length === 0 && result.src.length === 0) {
+        let bestScore: number = Number.NEGATIVE_INFINITY;
+        let best: string = images[0];
+        for (let i = 0; i < images.length; i++) {
+          const image: string = images[i];
+          if (image.length === 0) {
+            continue;
+          }
+          const tag: string = i < tags.length ? tags[i] : '';
+          const score: number = Number.parseFloat(tag);
+          if (!Number.isNaN(score) && score >= bestScore) {
+            bestScore = score;
+            best = image;
+          }
+        }
+        result.crop = best;
+        result.src = best;
+      } else {
+        if (result.crop.length === 0) {
+          result.crop = result.src;
+        }
+        if (result.src.length === 0) {
+          result.src = result.crop;
+        }
+      }
+    } catch (e) {
+    }
+    return result;
   }
 
   private applyFaceConfig(call: MethodCall): void {
@@ -277,6 +358,11 @@ export default class FlutterBdfaceCollectPlugin implements FlutterPlugin, Method
     const sound = this.readBooleanArg(call, 'sound');
     if (sound != null) {
       config.setSound(sound);
+    }
+    const timeoutTime = this.readNumberArg(call, 'timeoutTime');
+    if (timeoutTime != null && timeoutTime > 0) {
+      // 秒 -> 毫秒
+      config.setTimeDetectModule(timeoutTime * 1000);
     }
     config.setCacheImageNum(3);
     config.setShowResultView(false);

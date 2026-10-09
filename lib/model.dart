@@ -75,6 +75,9 @@ class FaceConfig {
   /// 开启提示音
   late bool sound;
 
+  /// 人脸采集超时时间（秒）	默认：20
+  late int timeoutTime;
+
   FaceConfig(
       {this.minFaceSize = 200,
       this.notFace = 0.6,
@@ -88,20 +91,21 @@ class FaceConfig {
       this.occlusionLeftContour = 0.8,
       this.occlusionRightContour = 0.8,
       this.occlusionChin = 0.8,
-      this.headPitch = 20,
-      this.headYaw = 18,
-      this.headRoll = 20,
+      this.headPitch = 30,
+      this.headYaw = 25,
+      this.headRoll = 30,
       this.eyeClosed = 0.7,
       // this.cacheImageNum = 3,
       this.scale = 1,
       this.cropHeight = 640,
       this.cropWidth = 480,
       this.enlargeRatio = 1.5,
-      this.faceFarRatio = 0.4,
+      this.faceFarRatio = 0.25,
       this.faceClosedRatio = 1,
       this.secType = 0,
       this.sound = true,
       this.livenessRandom = true,
+      this.timeoutTime = 40,
       Set<LivenessType>? livenessTypes})
       : assert(0.1 <= notFace && notFace <= 1.0),
         assert(0 <= brightness && brightness <= 255),
@@ -123,6 +127,7 @@ class FaceConfig {
         assert(0 <= faceFarRatio && faceFarRatio <= 1.0),
         assert(0 <= faceClosedRatio && faceClosedRatio <= 1.0),
         assert(secType == 0 || secType == 1),
+        assert(timeoutTime > 0),
         assert(livenessTypes == null || livenessTypes.length > 0) {
     this.livenessTypes = livenessTypes ?? {};
   }
@@ -155,6 +160,7 @@ class FaceConfig {
         'sound': this.sound,
         'livenessTypes': this.livenessTypes.map((v) => v.code).toList(),
         'livenessRandom': livenessRandom,
+        'timeoutTime': this.timeoutTime,
       };
 }
 

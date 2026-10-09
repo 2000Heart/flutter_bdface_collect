@@ -7,7 +7,6 @@ import androidx.annotation.NonNull;
 
 import com.baidu.idl.face.platform.FaceConfig;
 import com.baidu.idl.face.platform.FaceConfigHelper;
-import com.baidu.idl.face.platform.FaceEnvironment;
 import com.baidu.idl.face.platform.FaceSDKManager;
 import com.baidu.idl.face.platform.LivenessTypeEnum;
 import com.baidu.idl.face.platform.listener.IInitCallback;
@@ -177,6 +176,7 @@ public class FlutterBdfaceCollectPlugin implements FlutterPlugin, MethodCallHand
         List<String> livenessTypes = (List<String>) argumentsMap.get("livenessTypes");
         Boolean livenessRandom = (Boolean) argumentsMap.get("livenessRandom");
         Boolean sound = (Boolean) argumentsMap.get("sound");
+        Integer timeoutTime = (Integer) argumentsMap.get("timeoutTime");
         assert minFaceSize != null && notFace != null && brightness != null;
         assert brightnessMax != null && blurness != null && occlusionLeftEye != null;
         assert occlusionRightEye != null && occlusionChin != null;
@@ -187,6 +187,7 @@ public class FlutterBdfaceCollectPlugin implements FlutterPlugin, MethodCallHand
         assert scale != null && cropHeight != null && cropWidth != null;
         assert enlargeRatio != null && faceFarRatio != null && faceClosedRatio != null;
         assert livenessTypes != null && livenessRandom != null;
+        assert timeoutTime != null && timeoutTime > 0;
 
         FaceConfig config = FaceSDKManager.getInstance().getFaceConfig();
         // 设置 最小人脸阈值
@@ -238,8 +239,8 @@ public class FlutterBdfaceCollectPlugin implements FlutterPlugin, MethodCallHand
         FaceConfigHelper.setSecType(config, secType);
         // 设置 开启提示音
         config.setSound(sound);
-        // 检测超时设置
-        config.setTimeDetectModule(FaceEnvironment.TIME_DETECT_MODULE);
+        // 检测超时设置（秒 -> 毫秒）
+        config.setTimeDetectModule(timeoutTime * 1000L);
         // 设置 动作活体是否随机
         config.setLivenessRandom(livenessRandom);
         // 设置 活体动作
