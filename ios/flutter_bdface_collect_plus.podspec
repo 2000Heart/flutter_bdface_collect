@@ -17,7 +17,7 @@ Baidu face offline collect plugin for Android, iOS and OpenHarmony.
   s.source_files = 'Classes/**/*'
   s.public_header_files = 'Classes/**/*.h'
   # 官方整包：IDLFaceSDK（算法）+ BDFaceBaseKit（UI/流程），以及语音/图片/模型 bundle 与参数配置
-  # local_config.json 由宿主 App 自行放入 Runner/Copy Bundle Resources，勿在此打包，否则会与 App 资源冲突
+  # 采集参数由 Dart FaceConfig 下发，勿在此打包 local_config.json（避免与宿主资源冲突）
   s.resources = [
     'BDFaceSDK/*.bundle',
     'BDFaceSDK/BDFaceParamsConfig.json'
