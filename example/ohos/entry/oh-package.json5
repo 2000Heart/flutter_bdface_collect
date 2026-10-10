@@ -7,6 +7,6 @@
   "author": "",
   "license": "",
   "dependencies": {
-    "flutter_bdface_collect": "file:../../../ohos"
+    "flutter_bdface_collect_plus": "file:../../../ohos"
   }
 }

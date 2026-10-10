@@ -1,3 +1,27 @@
+## 1.2.0
+
+* RENAME package to `flutter_bdface_collect_plus`; Android / channel namespace `com.fluttercandies.*` → `com.heart.*`.
+* ADD OpenHarmony (OHOS) platform support.
+* UPDATE Baidu Face offline collect SDK to 6.4.x (Android / iOS / OHOS).
+* UPDATE iOS to use official BDFaceBaseKit and remove custom collect UI.
+* ADD FaceConfig.timeoutTime for collect timeout (seconds).
+* FIX OHOS collect result parsing.
+* FIX iOS collect stability (action animation crash, auth / camera main-thread jank).
+* 包名更名为 `flutter_bdface_collect_plus`；Android / Channel 命名空间由 `com.fluttercandies.*` 改为 `com.heart.*`。
+* 新增 OpenHarmony（鸿蒙）平台支持。
+* 升级百度人脸离线采集 SDK 至 6.4.x（Android / iOS / 鸿蒙）。
+* iOS 接入官方 BDFaceBaseKit，移除自研采集 UI。
+* FaceConfig 新增 timeoutTime 采集超时配置（秒）。
+* 修复鸿蒙采集结果解析。
+* 修复 iOS 采集稳定性（动作动画崩溃、授权与相机主线程卡顿等）。
+
+## 1.1.9
+
+* UPDATE Android compileSdkVersion to 31.
+* FIX typos.
+* 升级 Android compileSdkVersion 至 31。
+* 修正拼写错误。
+
 ## 1.1.8
 
 * FIx no result on iOS

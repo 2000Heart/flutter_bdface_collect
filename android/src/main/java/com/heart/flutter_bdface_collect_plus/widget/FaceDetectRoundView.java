@@ -1,7 +1,7 @@
 /**
  * Copyright (C) 2017 Baidu Inc. All rights reserved.
  */
-package com.fluttercandies.flutter_bdface_collect.widget;
+package com.heart.flutter_bdface_collect_plus.widget;
 
 import android.content.Context;
 import android.graphics.Canvas;

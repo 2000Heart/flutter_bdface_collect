@@ -3,7 +3,7 @@ import UIKit
 import XCTest
 
 
-@testable import flutter_bdface_collect
+@testable import flutter_bdface_collect_plus
 
 // This demonstrates a simple unit test of the Swift portion of this plugin's implementation.
 //

@@ -1,4 +1,4 @@
-package com.fluttercandies.flutter_bdface_collect.utils;
+package com.heart.flutter_bdface_collect_plus.utils;
 
 import android.app.Activity;
 import android.content.ContentResolver;

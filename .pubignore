@@ -1,0 +1,14 @@
+# Local / tooling
+.vscode/
+*.code-workspace
+.fvm/
+.idea/
+*.iml
+
+# Demos & caches (also covered by .gitignore where applicable)
+official-demo/
+example/ios/Pods/
+example/ohos/.hvigor/
+example/ohos/oh_modules/
+**/build/
+**/.dart_tool/

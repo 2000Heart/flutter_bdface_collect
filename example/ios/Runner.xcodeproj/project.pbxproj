@@ -375,7 +375,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.fluttercandies.flutterBdfaceCollectExample;
+				PRODUCT_BUNDLE_IDENTIFIER = com.heart.flutterBdfaceCollectPlusExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -499,7 +499,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.fluttercandies.flutterBdfaceCollectExample;
+				PRODUCT_BUNDLE_IDENTIFIER = com.heart.flutterBdfaceCollectPlusExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -518,7 +518,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.fluttercandies.flutterBdfaceCollectExample;
+				PRODUCT_BUNDLE_IDENTIFIER = com.heart.flutterBdfaceCollectPlusExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				VERSIONING_SYSTEM = "apple-generic";
 			};

@@ -9,9 +9,9 @@
       <excludeFolder url="file://$MODULE_DIR$/example/build" />
       <excludeFolder url="file://$MODULE_DIR$/example/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/example/.dart_tool" />
-      <excludeFolder url="file://$MODULE_DIR$/example/ios/.symlinks/plugins/flutter_bdface_collect/.dart_tool" />
-      <excludeFolder url="file://$MODULE_DIR$/example/ios/.symlinks/plugins/flutter_bdface_collect/build" />
-      <excludeFolder url="file://$MODULE_DIR$/example/ios/.symlinks/plugins/flutter_bdface_collect/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/example/ios/.symlinks/plugins/flutter_bdface_collect_plus/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/example/ios/.symlinks/plugins/flutter_bdface_collect_plus/build" />
+      <excludeFolder url="file://$MODULE_DIR$/example/ios/.symlinks/plugins/flutter_bdface_collect_plus/.pub" />
     </content>
     <orderEntry type="jdk" jdkName="Android API 28 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />

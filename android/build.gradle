@@ -1,4 +1,4 @@
-group 'com.fluttercandies.flutter_bdface_collect'
+group 'com.heart.flutter_bdface_collect_plus'
 version '1.0'
 
 buildscript {
@@ -17,7 +17,7 @@ rootProject.allprojects {
         google()
         mavenCentral()
         maven {
-            url "${project(':flutter_bdface_collect').projectDir}/repo"
+            url "${project(':flutter_bdface_collect_plus').projectDir}/repo"
         }
     }
 }
@@ -25,7 +25,7 @@ rootProject.allprojects {
 apply plugin: 'com.android.library'
 
 android {
-    namespace 'com.fluttercandies.flutter_bdface_collect'
+    namespace 'com.heart.flutter_bdface_collect_plus'
     compileSdk 34
 
     defaultConfig {

@@ -1,6 +1,6 @@
 {
   "module": {
-    "name": "flutter_bdface_collect",
+    "name": "flutter_bdface_collect_plus",
     "type": "har",
     "deviceTypes": [
       "default",

@@ -1,6 +1,6 @@
 //
 //  MethodConstants.h
-//  flutter_bdface_collect
+//  flutter_bdface_collect_plus
 //
 //  Created by CyJay on 2021/6/7.
 //

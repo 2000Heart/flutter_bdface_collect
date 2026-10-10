@@ -11,7 +11,7 @@ class FlutterBdfaceCollect extends _ServiceApi {
 }
 
 class _ServiceApi {
-  static const String _ChannelName = 'com.fluttercandies.bdface_collect';
+  static const String _ChannelName = 'com.heart.bdface_collect_plus';
   final MethodChannel _methodChannel = MethodChannel(_ChannelName);
 
   Future<String?> get platformVersion async {

@@ -1,7 +1,7 @@
 /**
  * Copyright (C) 2017 Baidu Inc. All rights reserved.
  */
-package com.fluttercandies.flutter_bdface_collect;
+package com.heart.flutter_bdface_collect_plus;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
@@ -40,11 +40,11 @@ import com.baidu.idl.face.platform.model.FaceExtInfo;
 import com.baidu.idl.face.platform.model.ImageInfo;
 import com.baidu.idl.face.platform.utils.APIUtils;
 import com.baidu.idl.face.platform.utils.Base64Utils;
-import com.fluttercandies.flutter_bdface_collect.utils.BrightnessUtils;
-import com.fluttercandies.flutter_bdface_collect.utils.CameraPreviewUtils;
-import com.fluttercandies.flutter_bdface_collect.utils.CameraUtils;
-import com.fluttercandies.flutter_bdface_collect.utils.VolumeUtils;
-import com.fluttercandies.flutter_bdface_collect.widget.FaceDetectRoundView;
+import com.heart.flutter_bdface_collect_plus.utils.BrightnessUtils;
+import com.heart.flutter_bdface_collect_plus.utils.CameraPreviewUtils;
+import com.heart.flutter_bdface_collect_plus.utils.CameraUtils;
+import com.heart.flutter_bdface_collect_plus.utils.VolumeUtils;
+import com.heart.flutter_bdface_collect_plus.widget.FaceDetectRoundView;
 
 import java.util.ArrayList;
 import java.util.Collections;

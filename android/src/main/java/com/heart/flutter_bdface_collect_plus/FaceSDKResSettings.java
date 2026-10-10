@@ -1,7 +1,7 @@
 /**
  * Copyright (C) 2017 Baidu Inc. All rights reserved.
  */
-package com.fluttercandies.flutter_bdface_collect;
+package com.heart.flutter_bdface_collect_plus;
 
 import com.baidu.idl.face.platform.FaceEnvironment;
 import com.baidu.idl.face.platform.FaceStatusNewEnum;

@@ -1,4 +1,4 @@
-package com.fluttercandies.flutter_bdface_collect;
+package com.heart.flutter_bdface_collect_plus;
 
 /// 方法常量
 public class MethodConstants {

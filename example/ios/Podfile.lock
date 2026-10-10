@@ -1,21 +1,21 @@
 PODS:
   - Flutter (1.0.0)
-  - flutter_bdface_collect (0.0.1):
+  - flutter_bdface_collect_plus (0.0.1):
     - Flutter
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
-  - flutter_bdface_collect (from `.symlinks/plugins/flutter_bdface_collect/ios`)
+  - flutter_bdface_collect_plus (from `.symlinks/plugins/flutter_bdface_collect_plus/ios`)
 
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
-  flutter_bdface_collect:
-    :path: ".symlinks/plugins/flutter_bdface_collect/ios"
+  flutter_bdface_collect_plus:
+    :path: ".symlinks/plugins/flutter_bdface_collect_plus/ios"
 
 SPEC CHECKSUMS:
   Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
-  flutter_bdface_collect: 4ea56cc5237156c94cb63a896a83eeef4944c724
+  flutter_bdface_collect_plus: 4ea56cc5237156c94cb63a896a83eeef4944c724
 
 PODFILE CHECKSUM: d85ddc5f90e8c593f9dc16ef40fc88253b4f8f6b
 

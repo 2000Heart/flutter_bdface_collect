@@ -1,17 +1,17 @@
 #
 # To learn more about a Podspec see http://guides.cocoapods.org/syntax/podspec.html.
-# Run `pod lib lint flutter_bdface_collect.podspec` to validate before publishing.
+# Run `pod lib lint flutter_bdface_collect_plus.podspec` to validate before publishing.
 #
 Pod::Spec.new do |s|
-  s.name             = 'flutter_bdface_collect'
+  s.name             = 'flutter_bdface_collect_plus'
   s.version          = '0.0.1'
-  s.summary          = 'a baidu face collect plugin. Only Android and IOS platforms are supported.'
+  s.summary          = 'Baidu face offline collect plugin for Android, iOS and OpenHarmony.'
   s.description      = <<-DESC
-a baidu face collect plugin. Only Android and IOS platforms are supported.
+Baidu face offline collect plugin for Android, iOS and OpenHarmony.
                        DESC
-  s.homepage         = 'http://example.com'
+  s.homepage         = 'https://github.com/2000Heart/flutter_bdface_collect'
   s.license          = { :file => '../LICENSE' }
-  s.author           = { 'Your Company' => 'email@example.com' }
+  s.author           = { '2000Heart' => 'https://github.com/2000Heart' }
   s.source           = { :path => '.' }
   s.static_framework = true
   s.source_files = 'Classes/**/*'
@@ -23,7 +23,7 @@ a baidu face collect plugin. Only Android and IOS platforms are supported.
     'BDFaceSDK/BDFaceParamsConfig.json'
   ]
   s.resource_bundles = {
-    'flutter_bdface_collect_privacy' => ['Resources/PrivacyInfo.xcprivacy']
+    'flutter_bdface_collect_plus_privacy' => ['Resources/PrivacyInfo.xcprivacy']
   }
   s.vendored_frameworks = 'BDFaceSDK/*.framework'
   s.libraries = ['c++']

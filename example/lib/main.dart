@@ -3,8 +3,8 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bdface_collect/flutter_bdface_collect.dart';
-import 'package:flutter_bdface_collect/model.dart';
+import 'package:flutter_bdface_collect_plus/flutter_bdface_collect_plus.dart';
+import 'package:flutter_bdface_collect_plus/model.dart';
 
 void main() {
   runApp(MyApp());
@@ -49,13 +49,13 @@ class _MyHomePageState extends State<MyHomePage> {
   Future<void> _faceCollect() async {
     late String licenseId;
     if (Platform.isAndroid) {
-      licenseId = 'flutter_bdface_collect_example-face-android';
+      licenseId = 'flutter_bdface_collect_plus_example-face-android';
     } else if (Platform.isIOS) {
-      licenseId = 'flutter_bdface_collect_example-face-ios';
+      licenseId = 'flutter_bdface_collect_plus_example-face-ios';
     } else if (Platform.operatingSystem == 'ohos') {
-      licenseId = 'flutter_bdface_collect_example-face-harmony';
+      licenseId = 'flutter_bdface_collect_plus_example-face-harmony';
     } else {
-      licenseId = 'flutter_bdface_collect_example-face-harmony';
+      licenseId = 'flutter_bdface_collect_plus_example-face-harmony';
     }
     var err = await FlutterBdfaceCollect.instance.init(licenseId);
     if (err != null) print('百度人脸采集初始化失败:$err');

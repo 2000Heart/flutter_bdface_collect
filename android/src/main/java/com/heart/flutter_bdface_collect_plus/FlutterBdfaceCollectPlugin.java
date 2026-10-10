@@ -1,4 +1,4 @@
-package com.fluttercandies.flutter_bdface_collect;
+package com.heart.flutter_bdface_collect_plus;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -31,7 +31,7 @@ public class FlutterBdfaceCollectPlugin implements FlutterPlugin, MethodCallHand
     private Activity activity;
     private static final int COLLECT_REQ_CODE = 19491001; /// I love China
     public static final int COLLECT_OK_CODE = 10011949; /// I love China
-    private static final String channelName = "com.fluttercandies.bdface_collect";
+    private static final String channelName = "com.heart.bdface_collect_plus";
     private Result result;
     static String imageCropBase64, imageSrcBase64;
 

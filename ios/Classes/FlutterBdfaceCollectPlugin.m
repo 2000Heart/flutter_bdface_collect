@@ -9,7 +9,7 @@
 
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
   FlutterMethodChannel* channel = [FlutterMethodChannel
-      methodChannelWithName:@"com.fluttercandies.bdface_collect"
+      methodChannelWithName:@"com.heart.bdface_collect_plus"
             binaryMessenger:[registrar messenger]];
   FlutterBdfaceCollectPlugin* instance = [[FlutterBdfaceCollectPlugin alloc] init];
   [registrar addMethodCallDelegate:instance channel:channel];

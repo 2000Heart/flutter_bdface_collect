@@ -1,9 +1,13 @@
-name: flutter_bdface_collect
-description: a baidu face collect plugin for Android, iOS and OpenHarmony.
+name: flutter_bdface_collect_plus
+description: Baidu face offline collect plugin for Android, iOS and OpenHarmony (fork with OHOS & SDK 6.4.x).
 version: 1.2.0
-homepage: https://github.com/fluttercandies/flutter_bdface_collect
+homepage: https://github.com/2000Heart/flutter_bdface_collect
+repository: https://github.com/2000Heart/flutter_bdface_collect
+issue_tracker: https://github.com/2000Heart/flutter_bdface_collect/issues
+
 environment:
   sdk: ">=3.0.0 <4.0.0"
+  flutter: ">=3.0.0"
 
 dependencies:
   flutter:
@@ -13,19 +17,18 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-# For information on the generic Dart part of this file, see the
-# following page: https://dart.dev/tools/pub/pubspec
+topics:
+  - face
+  - baidu
+  - collect
+  - ohos
+  - openharmony
 
-# The following section is specific to Flutter.
 flutter:
-  # This section identifies this Flutter project as a plugin project.
-  # The 'pluginClass' and Android 'package' identifiers should not ordinarily
-  # be modified. They are used by the tooling to maintain consistency when
-  # adding or updating assets for this project.
   plugin:
     platforms:
       android:
-        package: com.fluttercandies.flutter_bdface_collect
+        package: com.heart.flutter_bdface_collect_plus
         pluginClass: FlutterBdfaceCollectPlugin
       ios:
         pluginClass: FlutterBdfaceCollectPlugin
